@@ -3,7 +3,8 @@
 .App{
   min-height:100vh;
   display: flex;
-  background-image: url("./background1.jpg");
+  background-image: url("https://media.istockphoto.com/id/1268728034/photo/background-autumn-orange-yellow-green-pale-grunge-gradient-colorful-pattern-abstract-concrete.jpg?s=612x612&w=0&k=20&c=DYkNbrKYCl58JCN013J6DUivb7QiOPE2__EPAPnVWpQ=");
   background-size: cover;
   background-position: center;
 }
+/* https://media.istockphoto.com/id/1185747322/photo/blue-mesh-gradient-blurred-motion-abstract-background.jpg?s=612x612&w=0&k=20&c=5S8NBjBQCjL_5zMenfcRrx5X9m6AqJLwYbdTprLJPiA= */ 

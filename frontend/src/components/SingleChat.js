@@ -27,7 +27,7 @@ const SingleChat = ({fetchAgain,setFetchAgain}) => {
   const {user, selectedChat, setSelectedChat,notification, setNotification} = ChatState()
   const toast = useToast()
 
-
+console.log(selectedChat);
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -49,7 +49,7 @@ try {
     setLoading(true)
     const {data} = await axios.get(`/api/message/${selectedChat._id}`,config
     );
-    console.log(messages);
+    console.log(data);
     setMessages(data);
     setLoading(false);
     socket.emit('join chat', selectedChat._id);
@@ -116,7 +116,6 @@ try {
     chatId: selectedChat._id,
 },
     config)
-    // console.log(data);
     socket.emit('new message', data)
     setMessages([...messages, data])
 } catch (error) {
@@ -178,7 +177,10 @@ setTimeout(()=>{
              </>
         )}
         </Text>
-        <Box display={"flex"} flexDir={"column"} justifyContent={"flex-end"} p={3} bg={"#E8E8E8"} w="100%" h={"90%"} borderRadius={"lg"} overflowY={"hidden"} >
+        <Box display={"flex"} flexDir={"column"} justifyContent={"flex-end"} p={3} 
+             backgroundImage="url('https://imgs.search.brave.com/xl73C6c7KInq574YbJnjQFbLcnqZE21R_pyIN6orXrs/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9lMS5w/eGZ1ZWwuY29tL2Rl/c2t0b3Atd2FsbHBh/cGVyLzQ2MS80Nzgv/ZGVza3RvcC13YWxs/cGFwZXItd2hhdHNh/cHAtZGFyay13aGF0/c2FwcC1jaGF0Lmpw/Zw')"
+
+         w="100%" h={"90%"} borderRadius={"lg"} overflowY={"hidden"} >
          {/* message here    */}
          {loading ? (
             <Spinner size={"xl"} w={20}
@@ -197,12 +199,13 @@ setTimeout(()=>{
                 width={70} 
                 style={{marginBottom: 15, marginLeft:0}}/>
             </div> : <></>}
-         <Input variant={"filled"} bg={"E0E0E0"} placeholder='Enter a message...' onChange={typingHandler} value={newMessage}/>
+         <Input variant={"filled"} bg={"E0E0E0"} color={"white"} placeholder='Enter a message...' onChange={typingHandler} value={newMessage}/>
          </FormControl>
         </Box>
         </>
     ) :(
-        <Box display={"flex"} alignItems={"center"} justifyContent={"center"} h={"100%"}>
+        <Box display={"flex"} alignItems={"center"}      
+        justifyContent={"center"} h={"100%"} w={"80%"}>
             <Text fontSize="3xl" pb={3} fontFamily={"Work sans"}>
                 Click on a user to start chatting
             </Text>

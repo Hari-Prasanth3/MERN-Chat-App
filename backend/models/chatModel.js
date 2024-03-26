@@ -1,5 +1,5 @@
 // chat name
-// is group chatusers
+// is group chat users
 // latest messages
 // group admin
 const mongoose = require('mongoose')

@@ -1,10 +1,10 @@
-import React,{useState} from 'react'
+import React, { useState } from "react";
 import { Tooltip } from "@chakra-ui/tooltip";
 import { Input } from "@chakra-ui/input";
 
 import { Box, Text } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
-import UserListItem from '../UserAvatar/UserListItem';
+import UserListItem from "../UserAvatar/UserListItem";
 import {
   Menu,
   MenuButton,
@@ -20,33 +20,37 @@ import {
   DrawerOverlay,
 } from "@chakra-ui/modal";
 import { Spinner } from "@chakra-ui/spinner";
-import ChatLoading from '../ChatLoading';
+import ChatLoading from "../ChatLoading";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/avatar";
-import { ChatState } from '../../Context/ChatProvider';
-import ProfileModal from './ProfileModal';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { ChatState } from "../../Context/ChatProvider";
+import ProfileModal from "./ProfileModal";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
 import { useToast } from "@chakra-ui/toast";
-import { getSender } from '../../config/ChatLogics';
-import NotificationBadge from 'react-notification-badge';
-import { Effect } from 'react-notification-badge';
-
+import { getSender } from "../../config/ChatLogics";
+import NotificationBadge from "react-notification-badge";
+import { Effect } from "react-notification-badge";
 
 const SideDrawer = () => {
-
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const {user,chats,setChats,setSelectedChat,notification, setNotification} = ChatState()
+  const {
+    user,
+    chats,
+    setChats,
+    setSelectedChat,
+    notification,
+    setNotification,
+  } = ChatState();
   const history = useHistory();
-  const btnRef = React.useRef()
+  const btnRef = React.useRef();
   const toast = useToast();
-
 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
@@ -119,26 +123,26 @@ const SideDrawer = () => {
     }
   };
 
- 
   return (
-  <>
-    <Box
-     display={"flex"}      justifyContent={"space-between"}
-      alignItems="center"
-      bg="white"
-      w="100%"
-      p="5px 10px 5px 10px"
-      borderWidth="5px"
-    >
-      <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
-        <Button variant="ghost" ref={btnRef} onClick={onOpen}>
-          <i className="fas fa-search"></i>
-          <Text d={{ base: "none", md: "flex" }} px={4}>
-            Search User
-          </Text>
-        </Button>
-      </Tooltip>
-      <Text fontSize="2xl" fontFamily="Work sans">
+    <>
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems="center"
+        bg="white"
+        w="100%"
+        p="5px 10px 5px 10px"
+        borderWidth="5px"
+       >
+        <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
+          <Button variant="ghost" ref={btnRef} onClick={onOpen}>
+            <i className="fas fa-search"></i>
+            <Text d={{ base: "none", md: "flex" }} px={4}>
+              Search User
+            </Text>
+          </Button>
+        </Tooltip>
+        <Text fontSize="2xl" fontFamily="Work sans">
           Talk-A-Tive
         </Text>
         <div>
@@ -151,21 +155,27 @@ const SideDrawer = () => {
               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
             {!notification.length && "No New Messages"}
-<MenuList pl={2}>
-  {notification.map(notify => (
-    <MenuItem key={notify._id} onClick={() => {
-      setSelectedChat(notify.chat);
-      setNotification(notification.filter((n) => n !== notify));
-    }}>
-  {notify.chat.isGroupChat
+            <MenuList pl={2}>
+              {notification.map((notify) => (
+                <MenuItem
+                  key={notify._id}
+                  onClick={() => {
+                    setSelectedChat(notify.chat);
+                    setNotification(notification.filter((n) => n !== notify));
+                  }}
+                >
+                  {notify.chat.isGroupChat
                     ? `New Message in ${notify.chat.chatName}`
-                    : `New Message from ${getSender(user, notify.chat.users)}`}    </MenuItem>
-  ))}
-</MenuList>
-
+                    : `New Message from ${getSender(
+                        user,
+                        notify.chat.users
+                      )}`}{" "}
+                </MenuItem>
+              ))}
+            </MenuList>
           </Menu>
           <Menu>
-            <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon/>} >
+            <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
               <Avatar
                 size="sm"
                 cursor="pointer"
@@ -175,17 +185,14 @@ const SideDrawer = () => {
             </MenuButton>
             <MenuList>
               <ProfileModal user={user}>
-            <MenuItem
-               >My Profile</MenuItem>
-               </ProfileModal>
-                <MenuDivider/>
-              <MenuItem
-               onClick={logoutHandler}
-               >Logout</MenuItem>
+                <MenuItem>My Profile</MenuItem>
+              </ProfileModal>
+              <MenuDivider />
+              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>
           </Menu>
         </div>
-      </Box>  
+      </Box>
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
@@ -201,7 +208,7 @@ const SideDrawer = () => {
               <Button onClick={handleSearch}>Go</Button>
             </Box>
             {loading ? (
-              <ChatLoading /> 
+              <ChatLoading />
             ) : (
               searchResult?.map((user) => (
                 <UserListItem
@@ -215,9 +222,8 @@ const SideDrawer = () => {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-    
-      </>
-      )
-}
+    </>
+  );
+};
 
-export default SideDrawer
+export default SideDrawer;
